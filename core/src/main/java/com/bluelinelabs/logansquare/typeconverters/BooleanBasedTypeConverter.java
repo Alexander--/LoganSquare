@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonParser;
 
 import java.io.IOException;
 
-public abstract class BooleanBasedTypeConverter<T> implements TypeConverter<T> {
+public abstract class BooleanBasedTypeConverter<T> extends SimpleValueConverter<T> {
 
     /**
      * Called to convert a boolean into an object of type T.

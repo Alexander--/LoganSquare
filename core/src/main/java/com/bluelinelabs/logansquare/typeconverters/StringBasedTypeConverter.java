@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonParser;
 
 import java.io.IOException;
 
-public abstract class StringBasedTypeConverter<T> implements TypeConverter<T> {
+public abstract class StringBasedTypeConverter<T> extends SimpleValueConverter<T> {
 
     /**
      * Called to convert a String into an object of type T.

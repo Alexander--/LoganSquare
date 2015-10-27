@@ -8,7 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 
-public abstract class DateTypeConverter implements TypeConverter<Date> {
+public abstract class DateTypeConverter extends SimpleValueConverter<Date> {
 
     // DateFormat is not thread-safe, so wrap it in a ThreadLocal
     private final ThreadLocal<DateFormat> mDateFormat = new ThreadLocal<DateFormat>(){
