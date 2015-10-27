@@ -36,6 +36,9 @@ public class LoganSquare {
 
     /** The JsonFactory that should be used throughout the entire app. */
     public static final JsonFactory JSON_FACTORY = new JsonFactory();
+    static {
+        JSON_FACTORY.setCodec(new LoganSquareCodec());
+    }
 
     /**
      * Parse an object from an InputStream.
