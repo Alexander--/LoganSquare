@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +36,9 @@ public class LoganSquare {
 
     /** The JsonFactory that should be used throughout the entire app. */
     public static final JsonFactory JSON_FACTORY = new JsonFactory();
+    static {
+        JSON_FACTORY.setCodec(new LoganSquareCodec());
+    }
 
     /**
      * Parse an object from an InputStream.
