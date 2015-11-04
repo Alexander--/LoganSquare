@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonParser;
 
 import java.io.IOException;
 
-public abstract class IntBasedTypeConverter<T> implements TypeConverter<T> {
+public abstract class IntBasedTypeConverter<T> extends SimpleValueConverter<T> {
 
     /**
      * Called to convert an int into an object of type T.

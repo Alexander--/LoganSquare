@@ -165,7 +165,7 @@ public class LoganSquare {
      * @param cls The class for which the JsonMapper should be fetched.
      */
     @SuppressWarnings("unchecked")
-    public static <E> JsonMapper<E> mapperFor(Class<E> cls) throws NoSuchMapperException {
+    public static <E> JsonMapper<E> mapperFor(Class<? extends E> cls) throws NoSuchMapperException {
         JsonMapper<E> mapper = OBJECT_MAPPERS.get(cls);
 
         if (mapper == null) {
@@ -180,12 +180,13 @@ public class LoganSquare {
      *
      * @param cls The class for which the TypeConverter should be fetched.
      */
-    @SuppressWarnings("unchecked")
-    public static <E> TypeConverter<E> typeConverterFor(Class<E> cls) throws NoSuchTypeConverterException {
-        TypeConverter<E> typeConverter = TYPE_CONVERTERS.get(cls);
+    public static <E> TypeConverter<E, Type> typeConverterFor(Class<? extends E> cls) throws NoSuchTypeConverterException {
+        TypeConverter<E, Type> typeConverter = getConverter(cls);
+
         if (typeConverter == null) {
             throw new NoSuchTypeConverterException(cls);
         }
+
         return typeConverter;
     }
 
@@ -195,7 +196,43 @@ public class LoganSquare {
      * @param cls The class for which the TypeConverter should be used.
      * @param converter The TypeConverter
      */
-    public static <E> void registerTypeConverter(Class<E> cls, TypeConverter<E> converter) {
+    public static <E> void registerTypeConverter(Class<E> cls, TypeConverter<E, ?> converter) {
         TYPE_CONVERTERS.put(cls, converter);
+    }
+
+    @SuppressWarnings("unchecked")
+    static <X, T extends JsonMapper<X>> T getMapper(Class<? extends X> cls) {
+        T mapper = (T) OBJECT_MAPPERS.get(cls);
+
+        if (mapper == null) {
+            for (int i = OBJECT_MAPPERS.size(); i > 0; ) {
+                Class<?> targetClass = OBJECT_MAPPERS.keyAt(--i);
+
+                if (targetClass.isAssignableFrom(cls)) {
+                    mapper = (T) OBJECT_MAPPERS.valueAt(i);
+                    break;
+                }
+            }
+        }
+
+        return mapper;
+    }
+
+    @SuppressWarnings("unchecked")
+    static <X, T extends TypeConverter<X, ?>> T getConverter(Class<? extends X> cls) {
+        T converter = (T) TYPE_CONVERTERS.get(cls);
+
+        if (converter == null) {
+            for (int i = TYPE_CONVERTERS.size(); i > 0; ) {
+                Class<?> targetClass = TYPE_CONVERTERS.keyAt(--i);
+
+                if (targetClass.isAssignableFrom(cls)) {
+                    converter = (T) TYPE_CONVERTERS.valueAt(i);
+                    break;
+                }
+            }
+        }
+
+        return converter;
     }
 }

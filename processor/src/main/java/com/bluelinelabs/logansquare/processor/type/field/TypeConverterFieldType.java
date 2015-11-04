@@ -34,8 +34,8 @@ public class TypeConverterFieldType extends FieldType {
 
     @Override
     public void parse(Builder builder, int depth, String setter, Object... setterFormatArgs) {
-        setter = replaceLastLiteral(setter, "$L.parse($L)");
-        builder.addStatement(setter, expandStringArgs(setterFormatArgs, TextUtils.toUpperCaseWithUnderscores(mTypeConverter.simpleName()), JSON_PARSER_VARIABLE_NAME));
+        setter = replaceLastLiteral(setter, "$L.parse($L, $T.class)");
+        builder.addStatement(setter, expandStringArgs(setterFormatArgs, TextUtils.toUpperCaseWithUnderscores(mTypeConverter.simpleName()), JSON_PARSER_VARIABLE_NAME, mTypeConverter.simpleName()));
     }
 
     @Override

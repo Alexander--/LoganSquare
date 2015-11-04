@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonParser;
 
 import java.io.IOException;
 
-public abstract class LongBasedTypeConverter<T> implements TypeConverter<T> {
+public abstract class LongBasedTypeConverter<T> extends SimpleValueConverter<T> {
 
     /**
      * Called to convert a long into an object of type T.

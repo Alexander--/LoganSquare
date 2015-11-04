@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonParser;
 
 import java.io.IOException;
 
-public abstract class FloatBasedTypeConverter<T> implements TypeConverter<T> {
+public abstract class FloatBasedTypeConverter<T> extends SimpleValueConverter<T> {
 
     /**
      * Called to convert a float into an object of type T.
